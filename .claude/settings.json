@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($env:PGPASSWORD='postgres'; & \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe\" -U postgres -h localhost -p 5432 -l)",
+      "PowerShell($env:PGPASSWORD='postgres'; & \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe\" -U postgres -h localhost -d nestjs_app -c \"\\\\dt\")",
+      "PowerShell($env:PGPASSWORD='postgres'; & \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe\" -U postgres -h localhost -c \"CREATE DATABASE nestjs_db;\")",
+      "Bash(break)",
+      "PowerShell($env:PGPASSWORD='postgres'; & \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe\" -U postgres -h localhost -d nestjs_db -c \"\\\\dt\")",
+      "WebFetch(domain:nestjs.com)",
+      "PowerShell(npm run build)",
+      "PowerShell($env:PGPASSWORD = 'postgres'; & \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe\" -U postgres -h localhost -tAc \"SELECT datname FROM pg_database WHERE datistemplate = false;\")",
+      "PowerShell(npm run start:dev)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}\\\\n' -X POST http://localhost:3000/api/users -H 'Content-Type: application/json' -d '{\"name\":\"Cuong Phung\",\"email\":\"cuong@example.com\",\"age\":28}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/users -H 'Content-Type: application/json' -d '{\"name\":\"Lan Anh\",\"email\":\"lan@example.com\"}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/users -H 'Content-Type: application/json' -d '{\"name\":\"Ai do\",\"email\":\"cuong@example.com\"}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/users -H 'Content-Type: application/json' -d '{\"name\":\"\",\"email\":\"khong-phai-email\",\"age\":\"abc\",\"hacker\":\"x\"}')",
+      "Bash(curl -s http://localhost:3000/api/users)",
+      "Bash(npm -v)",
+      "Bash(yarn add *)",
+      "Bash(yarn build *)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(sed 's/\\\\x1b\\\\[[0-9;]*m//g' \"C:/Users/MSI/AppData/Local/Temp/claude/c--Usage-NestJS/a47559c3-ddbf-4ad9-ac33-b217fbbabe1a/scratchpad/build.txt\")",
+      "Bash(netstat -ano)",
+      "Bash(curl -s -i -o - -D - -X GET \"http://localhost:3000/api/auth/google\" --max-time 10)",
+      "PowerShell(Get-Process -Id 19968,52300 -ErrorAction SilentlyContinue)",
+      "Bash(curl -s -D - -o /dev/null --max-time 10 \"http://localhost:3000/api/auth/google\")",
+      "Bash(ls -d /c/Usage/NestJS/*/ 2>/dev/null | head -20; echo \"---\"; ls -d /c/Usage/*/ 2>/dev/null | head -20)",
+      "Read(//c/Usage/**)",
+      "PowerShell(npx tsc -p tsconfig.json --noEmit)",
+      "PowerShell(try { $r = Invoke-RestMethod -Uri 'http://localhost:3000/api/categories' -Method Get; $r | ConvertTo-Json -Depth 4 } catch { \"ERR: $\\($_.Exception.Message\\)\"; $_.ErrorDetails.Message })",
+      "PowerShell(npx tsc --noEmit -p tsconfig.json)",
+      "PowerShell(npx eslint src/entities/transection.entity.ts)",
+      "PowerShell(npx tsc --noEmit -p frontend/tsconfig.json)",
+      "PowerShell(npx eslint frontend/app/transections frontend/services/transections.ts frontend/services/types.ts frontend/app/layout.tsx)",
+      "PowerShell(npm ls typeorm --depth=0)"
+    ]
+  }
+}
