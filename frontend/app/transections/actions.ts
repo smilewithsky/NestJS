@@ -1,21 +1,21 @@
-'use server';
+"use server";
 
-import { revalidatePath } from 'next/cache';
-import type { FormState } from '@/services/form-state';
-import { ApiError } from '@/services/http';
-import { transectionsApi } from '@/services/transections';
+import { revalidatePath } from "next/cache";
+import type { FormState } from "@/services/form-state";
+import { ApiError } from "@/services/http";
+import { transectionsApi } from "@/services/transections";
 
 /** Đọc 1 field text từ FormData. Trả '' nếu thiếu. */
 function text(formData: FormData, key: string): string {
   const value = formData.get(key);
-  return typeof value === 'string' ? value.trim() : '';
+  return typeof value === "string" ? value.trim() : "";
 }
 
 function toErrorState(error: unknown): FormState {
   if (error instanceof ApiError) {
-    return { status: 'error', message: error.message };
+    return { status: "error", message: error.message };
   }
-  return { status: 'error', message: 'Có lỗi không xác định xảy ra.' };
+  return { status: "error", message: "Có lỗi không xác định xảy ra." };
 }
 
 /**
@@ -37,17 +37,17 @@ export async function saveTransection(
   _prevState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const id = text(formData, 'id');
-  const description = text(formData, 'description');
-  const categoryId = Number(text(formData, 'categoryId'));
+  const id = text(formData, "id");
+  const description = text(formData, "description");
+  const categoryId = Number(text(formData, "categoryId"));
 
-  const amount = parseAmount(text(formData, 'amount'));
+  const amount = parseAmount(text(formData, "amount"));
   if (amount === null) {
-    return { status: 'error', message: 'Số tiền phải là số nguyên.' };
+    return { status: "error", message: "Số tiền phải là số nguyên." };
   }
 
   if (!id && !categoryId) {
-    return { status: 'error', message: 'Hãy chọn category cho giao dịch này.' };
+    return { status: "error", message: "Hãy chọn category cho giao dịch này." };
   }
 
   try {
@@ -62,11 +62,11 @@ export async function saveTransection(
     return toErrorState(error);
   }
 
-  revalidatePath('/transections');
+  revalidatePath("/transections");
 
   return {
-    status: 'ok',
-    message: id ? `Đã cập nhật giao dịch #${id}.` : 'Đã thêm giao dịch mới.',
+    status: "ok",
+    message: id ? `Đã cập nhật giao dịch #${id}.` : "Đã thêm giao dịch mới.",
   };
 }
 
@@ -77,7 +77,7 @@ export async function deleteTransection(id: number): Promise<FormState> {
     return toErrorState(error);
   }
 
-  revalidatePath('/transections');
+  revalidatePath("/transections");
 
-  return { status: 'ok', message: `Đã xoá giao dịch #${id}.` };
+  return { status: "ok", message: `Đã xoá giao dịch #${id}.` };
 }

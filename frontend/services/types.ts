@@ -12,8 +12,8 @@
 
 /** Khớp với src/common/enum.ts bên NestJS */
 export enum CategoryType {
-  INCOME = 'income',
-  EXPENSE = 'expense',
+  INCOME = "income",
+  EXPENSE = "expense",
 }
 
 /**
@@ -103,7 +103,7 @@ export interface CreateCategoryInput {
  * KHÔNG có userId: BE dùng OmitType để chặn việc đổi chủ sở hữu,
  * và `forbidNonWhitelisted` sẽ trả 400 nếu lỡ gửi kèm.
  */
-export type UpdateCategoryInput = Partial<Omit<CreateCategoryInput, 'userId'>>;
+export type UpdateCategoryInput = Partial<Omit<CreateCategoryInput, "userId">>;
 
 /* ──────────────────────── TRANSECTIONS ─────────────────────── */
 
@@ -146,5 +146,5 @@ export interface CreateTransectionInput {
  * giao dịch thì phải mở ở DTO bên BE trước, sửa mỗi chỗ này không đủ.
  */
 export type UpdateTransectionInput = Partial<
-  Pick<CreateTransectionInput, 'amount' | 'description'>
+  Pick<CreateTransectionInput, "amount" | "description">
 >;

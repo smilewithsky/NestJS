@@ -1,7 +1,7 @@
-import { ApiError } from '@/services/http';
-import type { User } from '@/services/types';
-import { usersApi } from '@/services/users';
-import UsersManager from './users-manager';
+import { ApiError } from "@/services/http";
+import type { User } from "@/services/types";
+import { usersApi } from "@/services/users";
+import UsersManager from "./users-manager";
 
 /**
  * SERVER COMPONENT (mặc định trong App Router — không có 'use client').
@@ -10,7 +10,7 @@ import UsersManager from './users-manager';
  * usersApi (file có 'server-only'). Không có useState/useEffect ở đây, và
  * cũng không cần: dữ liệu đã sẵn sàng trước khi HTML được gửi đi.
  */
-export const metadata = { title: 'Users — Chi Tiêu' };
+export const metadata = { title: "Users — Chi Tiêu" };
 
 export default async function UsersPage() {
   let users: User[] = [];
@@ -25,7 +25,7 @@ export default async function UsersPage() {
     loadError =
       error instanceof ApiError
         ? error.message
-        : 'Không tải được danh sách user.';
+        : "Không tải được danh sách user.";
   }
 
   return (
@@ -41,4 +41,3 @@ export default async function UsersPage() {
     </>
   );
 }
-;

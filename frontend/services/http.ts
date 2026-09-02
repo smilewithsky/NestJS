@@ -1,6 +1,6 @@
-import 'server-only';
+import "server-only";
 
-import { getSessionToken } from './session';
+import { getSessionToken } from "./session";
 
 /**
  * LỚP GỌI HTTP — chỗ DUY NHẤT trong FE biết địa chỉ backend.
@@ -15,7 +15,7 @@ import { getSessionToken } from './session';
  *   Browser ──► Next.js (localhost:3001) ──► NestJS (localhost:3000/api) ──► Postgres
  */
 export const API_BASE_URL =
-  process.env.API_BASE_URL ?? 'http://localhost:3000/api';
+  process.env.API_BASE_URL ?? "http://localhost:3000/api";
 
 /**
  * Bản URL mà TRÌNH DUYỆT gọi thẳng được.
@@ -38,7 +38,7 @@ export class ApiError extends Error {
     message: string,
   ) {
     super(message);
-    this.name = 'ApiError';
+    this.name = "ApiError";
   }
 }
 
@@ -50,10 +50,10 @@ export class ApiError extends Error {
  * Hàm này gom cả 2 trường hợp về 1 chuỗi để hiển thị.
  */
 function extractMessage(body: unknown, fallback: string): string {
-  if (typeof body === 'object' && body !== null && 'message' in body) {
+  if (typeof body === "object" && body !== null && "message" in body) {
     const message = (body as { message: unknown }).message;
-    if (Array.isArray(message)) return message.join(' • ');
-    if (typeof message === 'string') return message;
+    if (Array.isArray(message)) return message.join(" • ");
+    if (typeof message === "string") return message;
   }
   return fallback;
 }
@@ -79,7 +79,7 @@ export async function request<T>(
     res = await fetch(`${API_BASE_URL}${path}`, {
       ...init,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         // Chỉ thêm header khi thực sự có token — gửi "Bearer null" thì BE
         // sẽ hiểu là token hỏng và trả 401 thay vì coi như khách vãng lai.
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -87,7 +87,7 @@ export async function request<T>(
       },
       // Dữ liệu chi tiêu thay đổi liên tục → không cache.
       // Bỏ dòng này thì Next có thể trả lại kết quả cũ sau khi bạn vừa thêm mới.
-      cache: 'no-store',
+      cache: "no-store",
     });
   } catch {
     // fetch chỉ ném lỗi khi KHÔNG kết nối được (BE chưa chạy, sai port...).

@@ -1,10 +1,10 @@
-import { categoriesApi } from '@/services/categories';
-import { ApiError } from '@/services/http';
-import type { Category, User } from '@/services/types';
-import { usersApi } from '@/services/users';
-import CategoriesManager from './categories-manager';
+import { categoriesApi } from "@/services/categories";
+import { ApiError } from "@/services/http";
+import type { Category, User } from "@/services/types";
+import { usersApi } from "@/services/users";
+import CategoriesManager from "./categories-manager";
 
-export const metadata = { title: 'Categories — Chi Tiêu' };
+export const metadata = { title: "Categories — Chi Tiêu" };
 
 /**
  * Trong Next 15, `searchParams` là một PROMISE chứ không còn là object.
@@ -37,14 +37,14 @@ export default async function CategoriesPage({
     ]);
   } catch (error) {
     loadError =
-      error instanceof ApiError ? error.message : 'Không tải được dữ liệu.';
+      error instanceof ApiError ? error.message : "Không tải được dữ liệu.";
   }
 
   return (
     <>
       <h1>Quản lý Category</h1>
       <p className="subtitle">
-        Mỗi category thuộc về một user và có loại <code>thu</code> hoặc{' '}
+        Mỗi category thuộc về một user và có loại <code>thu</code> hoặc{" "}
         <code>chi</code>.
       </p>
 

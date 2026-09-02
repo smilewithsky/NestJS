@@ -1,7 +1,7 @@
-import 'server-only';
+import "server-only";
 
-import { request } from './http';
-import type { CreateUserInput, UpdateUserInput, User } from './types';
+import { request } from "./http";
+import type { CreateUserInput, UpdateUserInput, User } from "./types";
 
 /**
  * Các lời gọi tới /api/users.
@@ -11,24 +11,24 @@ import type { CreateUserInput, UpdateUserInput, User } from './types';
  * Bắt lỗi ở đây rồi trả null sẽ làm mất status code lẫn message của BE.
  */
 export const usersApi = {
-  list: () => request<User[]>('/users'),
+  list: () => request<User[]>("/users"),
 
   getOne: (id: number) => request<User>(`/users/${id}`),
 
   create: (input: CreateUserInput) =>
-    request<User>('/users', {
-      method: 'POST',
+    request<User>("/users", {
+      method: "POST",
       body: JSON.stringify(input),
     }),
 
   update: (id: number, input: UpdateUserInput) =>
     request<User>(`/users/${id}`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify(input),
     }),
 
   remove: (id: number) =>
     request<void>(`/users/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     }),
 };

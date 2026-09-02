@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   useActionState,
@@ -6,10 +6,10 @@ import {
   useRef,
   useState,
   useTransition,
-} from 'react';
-import { IDLE, type FormState } from '@/services/form-state';
-import type { User } from '@/services/types';
-import { deleteUser, saveUser } from './actions';
+} from "react";
+import { IDLE, type FormState } from "@/services/form-state";
+import type { User } from "@/services/types";
+import { deleteUser, saveUser } from "./actions";
 
 /**
  * CLIENT COMPONENT — 'use client' vì cần state + sự kiện onClick.
@@ -46,7 +46,7 @@ export default function UsersManager({ users }: { users: User[] }) {
   // Lưu xong thì dọn form. Không đặt trong action được: action chạy trên
   // server, không với tới được DOM của trình duyệt.
   useEffect(() => {
-    if (saveState.status === 'ok') {
+    if (saveState.status === "ok") {
       setEditing(null);
       formRef.current?.reset();
     }
@@ -69,7 +69,7 @@ export default function UsersManager({ users }: { users: User[] }) {
   return (
     <>
       <div className="card">
-        <h2>{editing ? `Sửa user #${editing.id}` : 'Thêm user mới'}</h2>
+        <h2>{editing ? `Sửa user #${editing.id}` : "Thêm user mới"}</h2>
 
         {/*
           key ép React DỰNG LẠI form mỗi khi đổi bản ghi đang sửa.
@@ -77,20 +77,20 @@ export default function UsersManager({ users }: { users: User[] }) {
           bấm "Sửa" ở dòng khác sẽ thấy ô input vẫn giữ giá trị cũ.
         */}
         <form
-          key={editing?.id ?? 'new'}
+          key={editing?.id ?? "new"}
           ref={formRef}
           action={formAction}
           className="row"
         >
           {/* Rỗng → action hiểu là tạo mới; có id → cập nhật. */}
-          <input type="hidden" name="id" value={editing?.id ?? ''} />
+          <input type="hidden" name="id" value={editing?.id ?? ""} />
 
           <div className="field">
             <label htmlFor="user-name">Tên</label>
             <input
               id="user-name"
               name="name"
-              defaultValue={editing?.name ?? ''}
+              defaultValue={editing?.name ?? ""}
               placeholder="Nguyễn Văn A"
               required
               maxLength={100}
@@ -103,13 +103,13 @@ export default function UsersManager({ users }: { users: User[] }) {
               id="user-email"
               name="email"
               type="email"
-              defaultValue={editing?.email ?? ''}
+              defaultValue={editing?.email ?? ""}
               placeholder="a@example.com"
               required
             />
           </div>
 
-          <div className="field" style={{ flex: '0 1 110px' }}>
+          <div className="field" style={{ flex: "0 1 110px" }}>
             <label htmlFor="user-age">Tuổi</label>
             <input
               id="user-age"
@@ -117,14 +117,14 @@ export default function UsersManager({ users }: { users: User[] }) {
               type="number"
               min={0}
               max={150}
-              defaultValue={editing?.age ?? ''}
+              defaultValue={editing?.age ?? ""}
               placeholder="—"
             />
           </div>
 
-          <div className="row" style={{ flex: '0 0 auto' }}>
+          <div className="row" style={{ flex: "0 0 auto" }}>
             <button type="submit" disabled={busy}>
-              {saving ? 'Đang lưu…' : editing ? 'Lưu' : 'Thêm'}
+              {saving ? "Đang lưu…" : editing ? "Lưu" : "Thêm"}
             </button>
 
             {editing && (
@@ -140,9 +140,9 @@ export default function UsersManager({ users }: { users: User[] }) {
           </div>
         </form>
 
-        {saveState.status !== 'idle' && (
+        {saveState.status !== "idle" && (
           <p
-            className={`alert ${saveState.status === 'ok' ? 'alert-ok' : 'alert-error'}`}
+            className={`alert ${saveState.status === "ok" ? "alert-ok" : "alert-error"}`}
             style={{ marginTop: 14, marginBottom: 0 }}
           >
             {saveState.message}
@@ -153,9 +153,9 @@ export default function UsersManager({ users }: { users: User[] }) {
       <div className="card">
         <h2>Danh sách ({users.length})</h2>
 
-        {deleteState.status !== 'idle' && (
+        {deleteState.status !== "idle" && (
           <p
-            className={`alert ${deleteState.status === 'ok' ? 'alert-ok' : 'alert-error'}`}
+            className={`alert ${deleteState.status === "ok" ? "alert-ok" : "alert-error"}`}
           >
             {deleteState.message}
           </p>
@@ -189,7 +189,7 @@ export default function UsersManager({ users }: { users: User[] }) {
                     hydration vì HTML hai bên không khớp.
                   */}
                   <td className="small muted">
-                    {new Date(user.createdAt).toLocaleDateString('vi-VN')}
+                    {new Date(user.createdAt).toLocaleDateString("vi-VN")}
                   </td>
                   <td>
                     <div className="actions">

@@ -1,4 +1,4 @@
-import 'server-only';
+import "server-only";
 
 /**
  * ⚠️ FILE NÀY ĐÃ CŨ — không còn chỗ nào import nữa.
@@ -17,7 +17,7 @@ import type {
   CreateUserInput,
   UpdateUserInput,
   User,
-} from './types';
+} from "./types";
 
 /**
  * LỚP GỌI API — chỗ DUY NHẤT trong FE biết địa chỉ backend.
@@ -31,7 +31,7 @@ import type {
  *
  *   Browser ──► Next.js (localhost:3001) ──► NestJS (localhost:3000/api) ──► Postgres
  */
-const API_BASE_URL = process.env.API_BASE_URL ?? 'http://localhost:3000/api';
+const API_BASE_URL = process.env.API_BASE_URL ?? "http://localhost:3000/api";
 
 /**
  * Lỗi có mang theo HTTP status, để tầng trên phân biệt được
@@ -43,7 +43,7 @@ export class ApiError extends Error {
     message: string,
   ) {
     super(message);
-    this.name = 'ApiError';
+    this.name = "ApiError";
   }
 }
 
@@ -55,10 +55,10 @@ export class ApiError extends Error {
  * Hàm này gom cả 2 trường hợp về 1 chuỗi để hiển thị.
  */
 function extractMessage(body: unknown, fallback: string): string {
-  if (typeof body === 'object' && body !== null && 'message' in body) {
+  if (typeof body === "object" && body !== null && "message" in body) {
     const { message } = body;
-    if (Array.isArray(message)) return message.join(' • ');
-    if (typeof message === 'string') return message;
+    if (Array.isArray(message)) return message.join(" • ");
+    if (typeof message === "string") return message;
   }
   return fallback;
 }
@@ -70,12 +70,12 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     res = await fetch(`${API_BASE_URL}${path}`, {
       ...init,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...init?.headers,
       },
       // Dữ liệu chi tiêu thay đổi liên tục → không cache.
       // Bỏ dòng này thì Next có thể trả lại kết quả cũ sau khi bạn vừa thêm mới.
-      cache: 'no-store',
+      cache: "no-store",
     });
   } catch {
     // fetch chỉ ném lỗi khi KHÔNG kết nối được (BE chưa chạy, sai port...).
@@ -106,25 +106,25 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 /* ─────────────────────────── USERS ─────────────────────────── */
 
 export const usersApi = {
-  list: () => request<User[]>('/users'),
+  list: () => request<User[]>("/users"),
 
   getOne: (id: number) => request<User>(`/users/${id}`),
 
   create: (input: CreateUserInput) =>
-    request<User>('/users', {
-      method: 'POST',
+    request<User>("/users", {
+      method: "POST",
       body: JSON.stringify(input),
     }),
 
   update: (id: number, input: UpdateUserInput) =>
     request<User>(`/users/${id}`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify(input),
     }),
 
   remove: (id: number) =>
     request<void>(`/users/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     }),
 };
 
@@ -141,8 +141,8 @@ export const categoriesApi = {
    * LUÔN thuộc về user id 1 dù bạn đang xem user nào. Sẽ hết khi làm Mốc 5 (auth).
    */
   create: (input: CreateCategoryInput) =>
-    request<Category>('/categories', {
-      method: 'POST',
+    request<Category>("/categories", {
+      method: "POST",
       body: JSON.stringify(input),
     }),
 };

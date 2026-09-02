@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import styles from './login.module.css';
+import { useState } from "react";
+import Link from "next/link";
+import styles from "./login.module.css";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3000/api';
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -76,7 +76,7 @@ export default function LoginPage() {
 
         <div className={styles.footer}>
           <p>
-            Chưa có tài khoản?{' '}
+            Chưa có tài khoản?{" "}
             <Link href="/register" className={styles.link}>
               Đăng ký ngay
             </Link>

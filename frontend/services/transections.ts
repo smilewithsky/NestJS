@@ -1,11 +1,11 @@
-import 'server-only';
+import "server-only";
 
-import { request } from './http';
+import { request } from "./http";
 import type {
   Transection,
   CreateTransectionInput,
   UpdateTransectionInput,
-} from './types';
+} from "./types";
 
 /**
  * Các lời gọi tới /api/transections — 5 route CRUD bên NestJS.
@@ -21,24 +21,24 @@ export const transectionsApi = {
    * BE có `relations: { category: true }` nên mỗi phần tử kèm sẵn object
    * category — không cần gọi thêm N lần để lấy tên danh mục.
    */
-  list: () => request<Transection[]>('/transections'),
+  list: () => request<Transection[]>("/transections"),
 
   getOne: (id: number) => request<Transection>(`/transections/${id}`),
 
   create: (input: CreateTransectionInput) =>
-    request<Transection>('/transections', {
-      method: 'POST',
+    request<Transection>("/transections", {
+      method: "POST",
       body: JSON.stringify(input),
     }),
 
   update: (id: number, input: UpdateTransectionInput) =>
     request<Transection>(`/transections/${id}`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify(input),
     }),
 
   remove: (id: number) =>
     request<void>(`/transections/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     }),
 };

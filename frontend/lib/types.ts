@@ -12,8 +12,8 @@
 
 /** Khớp với src/common/enum.ts bên NestJS */
 export enum CategoryType {
-  INCOME = 'income',
-  EXPENSE = 'expense',
+  INCOME = "income",
+  EXPENSE = "expense",
 }
 
 /** Khớp với src/entities/user.entity.ts */

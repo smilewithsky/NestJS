@@ -1,4 +1,4 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Không cấu hình gì đặc biệt: mọi lời gọi API đều đi qua lib/api.ts,

@@ -1,8 +1,8 @@
-import { categoriesApi } from '@/services/categories';
-import { ApiError } from '@/services/http';
-import { transectionsApi } from '@/services/transections';
-import type { Category, Transection } from '@/services/types';
-import TransectionsManager from './transections-manager';
+import { categoriesApi } from "@/services/categories";
+import { ApiError } from "@/services/http";
+import { transectionsApi } from "@/services/transections";
+import type { Category, Transection } from "@/services/types";
+import TransectionsManager from "./transections-manager";
 
 /**
  * SERVER COMPONENT (mặc định trong App Router — không có 'use client').
@@ -11,7 +11,7 @@ import TransectionsManager from './transections-manager';
  * transectionsApi (file có 'server-only'). Không có useState/useEffect ở đây,
  * và cũng không cần: dữ liệu đã sẵn sàng trước khi HTML được gửi đi.
  */
-export const metadata = { title: 'Transections — Chi Tiêu' };
+export const metadata = { title: "Transections — Chi Tiêu" };
 
 export default async function TransectionsPage() {
   let transections: Transection[] = [];
@@ -27,14 +27,14 @@ export default async function TransectionsPage() {
     ]);
   } catch (error) {
     loadError =
-      error instanceof ApiError ? error.message : 'Không tải được dữ liệu.';
+      error instanceof ApiError ? error.message : "Không tải được dữ liệu.";
   }
 
   return (
     <>
       <h1>Quản lý Giao dịch</h1>
       <p className="subtitle">
-        Mỗi giao dịch thuộc về một category. Dữ liệu lấy từ{' '}
+        Mỗi giao dịch thuộc về một category. Dữ liệu lấy từ{" "}
         <code>/api/transections</code>.
       </p>
 

@@ -12,9 +12,9 @@
  *   nên phải trả về như dữ liệu bình thường.
  */
 export interface FormState {
-  status: 'idle' | 'ok' | 'error';
+  status: "idle" | "ok" | "error";
   message: string;
 }
 
 /** Giá trị khởi tạo cho useActionState — chưa submit lần nào. */
-export const IDLE: FormState = { status: 'idle', message: '' };
+export const IDLE: FormState = { status: "idle", message: "" };

@@ -1,10 +1,10 @@
-'use server';
+"use server";
 
-import { revalidatePath } from 'next/cache';
-import { ApiError } from '@/services/http';
-import type { FormState } from '@/services/form-state';
-import type { CreateUserInput } from '@/services/types';
-import { usersApi } from '@/services/users';
+import { revalidatePath } from "next/cache";
+import { ApiError } from "@/services/http";
+import type { FormState } from "@/services/form-state";
+import type { CreateUserInput } from "@/services/types";
+import { usersApi } from "@/services/users";
 
 /**
  * SERVER ACTIONS — hàm chạy TRÊN SERVER nhưng gọi được thẳng từ client.
@@ -22,7 +22,7 @@ import { usersApi } from '@/services/users';
 /** Đọc 1 field text từ FormData. Trả '' nếu thiếu — không bao giờ trả null. */
 function text(formData: FormData, key: string): string {
   const value = formData.get(key);
-  return typeof value === 'string' ? value.trim() : '';
+  return typeof value === "string" ? value.trim() : "";
 }
 
 /** Gom mọi loại lỗi về một FormState để form hiển thị. */
@@ -30,11 +30,11 @@ function toErrorState(error: unknown): FormState {
   // ApiError mang theo message do NestJS soạn (409 trùng email,
   // 400 kèm danh sách lỗi validate...) — hiển thị nguyên văn là tốt nhất.
   if (error instanceof ApiError) {
-    return { status: 'error', message: error.message };
+    return { status: "error", message: error.message };
   }
   // Lỗi ngoài dự kiến: không ném tiếp, vì ném ra khỏi Server Action sẽ
   // hiện màn hình lỗi đỏ của Next và người dùng mất luôn dữ liệu đang gõ.
-  return { status: 'error', message: 'Có lỗi không xác định xảy ra.' };
+  return { status: "error", message: "Có lỗi không xác định xảy ra." };
 }
 
 /**
@@ -50,18 +50,18 @@ export async function saveUser(
   _prevState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const id = text(formData, 'id');
-  const name = text(formData, 'name');
-  const email = text(formData, 'email');
-  const ageRaw = text(formData, 'age');
+  const id = text(formData, "id");
+  const name = text(formData, "name");
+  const email = text(formData, "email");
+  const ageRaw = text(formData, "age");
 
   // Input rỗng cho ra '' chứ không phải undefined. Gửi thẳng age: ''
   // lên BE sẽ bị @IsInt chặn — nên phải quy về undefined để BE hiểu là
   // "không khai báo" (@IsOptional bỏ qua).
-  const age = ageRaw === '' ? undefined : Number(ageRaw);
+  const age = ageRaw === "" ? undefined : Number(ageRaw);
 
   if (age !== undefined && Number.isNaN(age)) {
-    return { status: 'error', message: 'Tuổi phải là số.' };
+    return { status: "error", message: "Tuổi phải là số." };
   }
 
   const input: CreateUserInput = { name, email, age };
@@ -79,10 +79,10 @@ export async function saveUser(
   // Trang /users là Server Component có `cache: 'no-store'`, nhưng Next vẫn
   // giữ Router Cache ở phía client. Không gọi revalidatePath thì bảng vẫn là
   // dữ liệu cũ cho tới khi người dùng F5.
-  revalidatePath('/users');
+  revalidatePath("/users");
 
   return {
-    status: 'ok',
+    status: "ok",
     message: id ? `Đã cập nhật ${name}.` : `Đã thêm ${name}.`,
   };
 }
@@ -100,10 +100,10 @@ export async function deleteUser(id: number): Promise<FormState> {
     return toErrorState(error);
   }
 
-  revalidatePath('/users');
+  revalidatePath("/users");
   // Category có `onDelete: 'CASCADE'` trỏ về user → xoá user là xoá luôn
   // toàn bộ category của họ. Làm mới cả trang kia cho khỏi hiển thị dữ liệu ma.
-  revalidatePath('/categories');
+  revalidatePath("/categories");
 
-  return { status: 'ok', message: `Đã xoá user #${id}.` };
+  return { status: "ok", message: `Đã xoá user #${id}.` };
 }

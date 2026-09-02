@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   useActionState,
@@ -6,21 +6,21 @@ import {
   useRef,
   useState,
   useTransition,
-} from 'react';
-import { IDLE, type FormState } from '@/services/form-state';
+} from "react";
+import { IDLE, type FormState } from "@/services/form-state";
 import {
   CategoryType,
   type Category,
   type Transection,
-} from '@/services/types';
-import { deleteTransection, saveTransection } from './actions';
+} from "@/services/types";
+import { deleteTransection, saveTransection } from "./actions";
 
 /**
  * `amount` từ BE là CHUỖI (cột decimal — xem chú thích ở services/types.ts).
  * Phải Number() trước khi format, và cũng đừng cộng dồn trực tiếp trên chuỗi.
  */
 function formatAmount(amount: string): string {
-  return `${Number(amount).toLocaleString('vi-VN')} ₫`;
+  return `${Number(amount).toLocaleString("vi-VN")} ₫`;
 }
 
 interface Props {
@@ -40,7 +40,7 @@ export default function TransectionsManager({
   const [deleting, startDelete] = useTransition();
 
   useEffect(() => {
-    if (saveState.status === 'ok') {
+    if (saveState.status === "ok") {
       setEditing(null);
       formRef.current?.reset();
     }
@@ -62,7 +62,7 @@ export default function TransectionsManager({
     <>
       <div className="card">
         <h2>
-          {editing ? `Sửa giao dịch #${editing.id}` : 'Thêm giao dịch mới'}
+          {editing ? `Sửa giao dịch #${editing.id}` : "Thêm giao dịch mới"}
         </h2>
 
         {!canCreate && (
@@ -78,12 +78,12 @@ export default function TransectionsManager({
           đầu — bấm Sửa bản ghi thứ hai sẽ vẫn thấy dữ liệu của bản ghi trước.
         */}
         <form
-          key={editing?.id ?? 'new'}
+          key={editing?.id ?? "new"}
           ref={formRef}
           action={formAction}
           className="row"
         >
-          <input type="hidden" name="id" value={editing?.id ?? ''} />
+          <input type="hidden" name="id" value={editing?.id ?? ""} />
 
           <div className="field">
             <label htmlFor="tr-category">Danh mục</label>
@@ -94,7 +94,7 @@ export default function TransectionsManager({
                 id="tr-category"
                 value={
                   editing.category?.name ??
-                  `category #${editing.category?.id ?? '?'}`
+                  `category #${editing.category?.id ?? "?"}`
                 }
                 disabled
               />
@@ -110,7 +110,7 @@ export default function TransectionsManager({
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name} (
-                    {category.type === CategoryType.INCOME ? 'Thu' : 'Chi'})
+                    {category.type === CategoryType.INCOME ? "Thu" : "Chi"})
                   </option>
                 ))}
               </select>
@@ -122,7 +122,7 @@ export default function TransectionsManager({
             <input
               id="tr-description"
               name="description"
-              defaultValue={editing?.description ?? ''}
+              defaultValue={editing?.description ?? ""}
               placeholder="Ăn trưa"
               required
               maxLength={255}
@@ -130,7 +130,7 @@ export default function TransectionsManager({
             />
           </div>
 
-          <div className="field" style={{ flex: '0 1 180px' }}>
+          <div className="field" style={{ flex: "0 1 180px" }}>
             <label htmlFor="tr-amount">Số tiền (₫)</label>
             <input
               id="tr-amount"
@@ -140,16 +140,16 @@ export default function TransectionsManager({
               // @IsInt() nên 12.5 sẽ bị trả 400.
               step={1}
               min={0}
-              defaultValue={editing ? Number(editing.amount) : ''}
+              defaultValue={editing ? Number(editing.amount) : ""}
               placeholder="50000"
               required
               disabled={!canCreate && !editing}
             />
           </div>
 
-          <div className="row" style={{ flex: '0 0 auto' }}>
+          <div className="row" style={{ flex: "0 0 auto" }}>
             <button type="submit" disabled={busy || (!canCreate && !editing)}>
-              {saving ? 'Đang lưu…' : editing ? 'Lưu' : 'Thêm'}
+              {saving ? "Đang lưu…" : editing ? "Lưu" : "Thêm"}
             </button>
 
             {editing && (
@@ -165,9 +165,9 @@ export default function TransectionsManager({
           </div>
         </form>
 
-        {saveState.status !== 'idle' && (
+        {saveState.status !== "idle" && (
           <p
-            className={`alert ${saveState.status === 'ok' ? 'alert-ok' : 'alert-error'}`}
+            className={`alert ${saveState.status === "ok" ? "alert-ok" : "alert-error"}`}
             style={{ marginTop: 14, marginBottom: 0 }}
           >
             {saveState.message}
@@ -178,9 +178,9 @@ export default function TransectionsManager({
       <div className="card">
         <h2>Danh sách ({transections.length})</h2>
 
-        {deleteState.status !== 'idle' && (
+        {deleteState.status !== "idle" && (
           <p
-            className={`alert ${deleteState.status === 'ok' ? 'alert-ok' : 'alert-error'}`}
+            className={`alert ${deleteState.status === "ok" ? "alert-ok" : "alert-error"}`}
           >
             {deleteState.message}
           </p>
@@ -206,20 +206,20 @@ export default function TransectionsManager({
                   <td className="muted">{transection.id}</td>
                   <td>{transection.description}</td>
                   <td className="small muted">
-                    {transection.category?.name ?? '—'}
+                    {transection.category?.name ?? "—"}
                   </td>
                   <td>
                     {transection.category ? (
                       <span
                         className={`badge ${
                           transection.category.type === CategoryType.INCOME
-                            ? 'badge-income'
-                            : 'badge-expense'
+                            ? "badge-income"
+                            : "badge-expense"
                         }`}
                       >
                         {transection.category.type === CategoryType.INCOME
-                          ? 'Thu'
-                          : 'Chi'}
+                          ? "Thu"
+                          : "Chi"}
                       </span>
                     ) : (
                       <span className="muted">—</span>

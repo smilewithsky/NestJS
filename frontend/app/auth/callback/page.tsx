@@ -1,7 +1,5 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { SESSION_COOKIE, setSessionToken } from '@/services/session';
-import { API_BASE_URL } from '@/services/http';
+import { redirect } from "next/navigation";
+import { setSessionToken } from "@/services/session";
 
 /**
  * CALLBACK TỪ GOOGLE.
@@ -29,12 +27,12 @@ export default async function GoogleCallbackPage(props: {
 
   // Nếu không có token, chuyển hướng về trang đăng nhập
   if (!token) {
-    redirect('/login?error=no_token');
+    redirect("/login?error=no_token");
   }
 
   // Lưu token vào cookie
   await setSessionToken(token);
 
   // Chuyển hướng về trang chủ
-  redirect('/');
+  redirect("/");
 }

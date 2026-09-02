@@ -1,6 +1,6 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import './globals.css';
+import type { Metadata } from "next";
+import Link from "next/link";
+import "./globals.css";
 
 /**
  * ROOT LAYOUT — bắt buộc phải có trong App Router.
@@ -9,8 +9,8 @@ import './globals.css';
  * (nên state trong layout được giữ nguyên — khác hẳn Pages Router cũ).
  */
 export const metadata: Metadata = {
-  title: 'Chi Tiêu — Frontend',
-  description: 'Next.js FE gọi API NestJS',
+  title: "Chi Tiêu — Frontend",
+  description: "Next.js FE gọi API NestJS",
 };
 
 export default function RootLayout({

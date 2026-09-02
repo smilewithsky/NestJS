@@ -1,6 +1,6 @@
-import 'server-only';
+import "server-only";
 
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 /**
  * PHIÊN ĐĂNG NHẬP — lưu JWT trong cookie httpOnly.
@@ -15,7 +15,7 @@ import { cookies } from 'next/headers';
  * Đổi lại, mọi lời gọi API phải chạy ở phía server (Server Component /
  * Server Action / Route Handler) — đúng kiến trúc sẵn có của dự án này.
  */
-export const SESSION_COOKIE = 'access_token';
+export const SESSION_COOKIE = "access_token";
 
 /** 7 ngày, khớp với JWT_EXPIRES_IN bên backend. */
 const MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
@@ -40,14 +40,14 @@ export async function setSessionToken(token: string): Promise<void> {
     httpOnly: true, // JS phía client không đọc được
     // secure chỉ cho phép gửi qua HTTPS — bật ở production, tắt ở localhost
     // (localhost dùng http nên bật lên là cookie không bao giờ được lưu).
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === "production",
     /**
      * 'lax': cookie VẪN được gửi khi người dùng được chuyển hướng từ trang
      * khác về đây bằng link/GET — chính là bước Google đẩy về /auth/callback.
      * Để 'strict' thì luồng đăng nhập Google sẽ hỏng.
      */
-    sameSite: 'lax',
-    path: '/',
+    sameSite: "lax",
+    path: "/",
     maxAge: MAX_AGE_SECONDS,
   });
 }

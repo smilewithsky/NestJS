@@ -1,22 +1,22 @@
-'use server';
+"use server";
 
-import { revalidatePath } from 'next/cache';
-import { categoriesApi } from '@/services/categories';
-import type { FormState } from '@/services/form-state';
-import { ApiError } from '@/services/http';
-import { CategoryType } from '@/services/types';
+import { revalidatePath } from "next/cache";
+import { categoriesApi } from "@/services/categories";
+import type { FormState } from "@/services/form-state";
+import { ApiError } from "@/services/http";
+import { CategoryType } from "@/services/types";
 
 /** Đọc 1 field text từ FormData. Trả '' nếu thiếu. */
 function text(formData: FormData, key: string): string {
   const value = formData.get(key);
-  return typeof value === 'string' ? value.trim() : '';
+  return typeof value === "string" ? value.trim() : "";
 }
 
 function toErrorState(error: unknown): FormState {
   if (error instanceof ApiError) {
-    return { status: 'error', message: error.message };
+    return { status: "error", message: error.message };
   }
-  return { status: 'error', message: 'Có lỗi không xác định xảy ra.' };
+  return { status: "error", message: "Có lỗi không xác định xảy ra." };
 }
 
 /**
@@ -36,17 +36,17 @@ export async function saveCategory(
   _prevState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const id = text(formData, 'id');
-  const userId = Number(text(formData, 'userId'));
-  const name = text(formData, 'name');
-  const type = text(formData, 'type');
+  const id = text(formData, "id");
+  const userId = Number(text(formData, "userId"));
+  const name = text(formData, "name");
+  const type = text(formData, "type");
 
   if (!isCategoryType(type)) {
-    return { status: 'error', message: 'Loại category không hợp lệ.' };
+    return { status: "error", message: "Loại category không hợp lệ." };
   }
 
   if (!id && !userId) {
-    return { status: 'error', message: 'Hãy chọn user sở hữu category này.' };
+    return { status: "error", message: "Hãy chọn user sở hữu category này." };
   }
 
   try {
@@ -61,10 +61,10 @@ export async function saveCategory(
     return toErrorState(error);
   }
 
-  revalidatePath('/categories');
+  revalidatePath("/categories");
 
   return {
-    status: 'ok',
+    status: "ok",
     message: id ? `Đã cập nhật "${name}".` : `Đã thêm "${name}".`,
   };
 }
@@ -76,7 +76,7 @@ export async function deleteCategory(id: number): Promise<FormState> {
     return toErrorState(error);
   }
 
-  revalidatePath('/categories');
+  revalidatePath("/categories");
 
-  return { status: 'ok', message: `Đã xoá category #${id}.` };
+  return { status: "ok", message: `Đã xoá category #${id}.` };
 }

@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import {
   useActionState,
   useEffect,
   useRef,
   useState,
   useTransition,
-} from 'react';
-import { IDLE, type FormState } from '@/services/form-state';
-import { CategoryType, type Category, type User } from '@/services/types';
-import { deleteCategory, saveCategory } from './actions';
+} from "react";
+import { IDLE, type FormState } from "@/services/form-state";
+import { CategoryType, type Category, type User } from "@/services/types";
+import { deleteCategory, saveCategory } from "./actions";
 
 const TYPE_LABEL: Record<CategoryType, string> = {
-  [CategoryType.INCOME]: 'Thu',
-  [CategoryType.EXPENSE]: 'Chi',
+  [CategoryType.INCOME]: "Thu",
+  [CategoryType.EXPENSE]: "Chi",
 };
 
 interface Props {
@@ -39,7 +39,7 @@ export default function CategoriesManager({
   const [deleting, startDelete] = useTransition();
 
   useEffect(() => {
-    if (saveState.status === 'ok') {
+    if (saveState.status === "ok") {
       setEditing(null);
       formRef.current?.reset();
     }
@@ -54,7 +54,7 @@ export default function CategoriesManager({
    * giữ nguyên bộ lọc.
    */
   function handleFilter(value: string) {
-    router.push(value ? `/categories?userId=${value}` : '/categories');
+    router.push(value ? `/categories?userId=${value}` : "/categories");
   }
 
   function handleDelete(category: Category) {
@@ -73,11 +73,11 @@ export default function CategoriesManager({
     <>
       <div className="card">
         <div className="row">
-          <div className="field" style={{ flex: '0 1 260px' }}>
+          <div className="field" style={{ flex: "0 1 260px" }}>
             <label htmlFor="filter-user">Xem category của</label>
             <select
               id="filter-user"
-              value={selectedUserId ?? ''}
+              value={selectedUserId ?? ""}
               onChange={(event) => handleFilter(event.target.value)}
               disabled={busy}
             >
@@ -93,7 +93,7 @@ export default function CategoriesManager({
       </div>
 
       <div className="card">
-        <h2>{editing ? `Sửa category #${editing.id}` : 'Thêm category mới'}</h2>
+        <h2>{editing ? `Sửa category #${editing.id}` : "Thêm category mới"}</h2>
 
         {!canCreate && (
           <p className="alert alert-error">
@@ -103,12 +103,12 @@ export default function CategoriesManager({
         )}
 
         <form
-          key={editing?.id ?? 'new'}
+          key={editing?.id ?? "new"}
           ref={formRef}
           action={formAction}
           className="row"
         >
-          <input type="hidden" name="id" value={editing?.id ?? ''} />
+          <input type="hidden" name="id" value={editing?.id ?? ""} />
 
           <div className="field">
             <label htmlFor="cat-user">Thuộc user</label>
@@ -117,14 +117,14 @@ export default function CategoriesManager({
               // UpdateCategoryDto đã cắt userId ra khỏi body hợp lệ.
               <input
                 id="cat-user"
-                value={editing.user?.name ?? `user #${editing.user?.id ?? '?'}`}
+                value={editing.user?.name ?? `user #${editing.user?.id ?? "?"}`}
                 disabled
               />
             ) : (
               <select
                 id="cat-user"
                 name="userId"
-                defaultValue={selectedUserId ?? ''}
+                defaultValue={selectedUserId ?? ""}
                 required
                 disabled={!canCreate}
               >
@@ -143,7 +143,7 @@ export default function CategoriesManager({
             <input
               id="cat-name"
               name="name"
-              defaultValue={editing?.name ?? ''}
+              defaultValue={editing?.name ?? ""}
               placeholder="Ăn uống"
               required
               maxLength={100}
@@ -151,7 +151,7 @@ export default function CategoriesManager({
             />
           </div>
 
-          <div className="field" style={{ flex: '0 1 140px' }}>
+          <div className="field" style={{ flex: "0 1 140px" }}>
             <label htmlFor="cat-type">Loại</label>
             <select
               id="cat-type"
@@ -164,9 +164,9 @@ export default function CategoriesManager({
             </select>
           </div>
 
-          <div className="row" style={{ flex: '0 0 auto' }}>
+          <div className="row" style={{ flex: "0 0 auto" }}>
             <button type="submit" disabled={busy || (!canCreate && !editing)}>
-              {saving ? 'Đang lưu…' : editing ? 'Lưu' : 'Thêm'}
+              {saving ? "Đang lưu…" : editing ? "Lưu" : "Thêm"}
             </button>
 
             {editing && (
@@ -182,9 +182,9 @@ export default function CategoriesManager({
           </div>
         </form>
 
-        {saveState.status !== 'idle' && (
+        {saveState.status !== "idle" && (
           <p
-            className={`alert ${saveState.status === 'ok' ? 'alert-ok' : 'alert-error'}`}
+            className={`alert ${saveState.status === "ok" ? "alert-ok" : "alert-error"}`}
             style={{ marginTop: 14, marginBottom: 0 }}
           >
             {saveState.message}
@@ -195,9 +195,9 @@ export default function CategoriesManager({
       <div className="card">
         <h2>Danh sách ({categories.length})</h2>
 
-        {deleteState.status !== 'idle' && (
+        {deleteState.status !== "idle" && (
           <p
-            className={`alert ${deleteState.status === 'ok' ? 'alert-ok' : 'alert-error'}`}
+            className={`alert ${deleteState.status === "ok" ? "alert-ok" : "alert-error"}`}
           >
             {deleteState.message}
           </p>
@@ -225,14 +225,14 @@ export default function CategoriesManager({
                     <span
                       className={`badge ${
                         category.type === CategoryType.INCOME
-                          ? 'badge-income'
-                          : 'badge-expense'
+                          ? "badge-income"
+                          : "badge-expense"
                       }`}
                     >
                       {TYPE_LABEL[category.type]}
                     </span>
                   </td>
-                  <td className="small muted">{category.user?.name ?? '—'}</td>
+                  <td className="small muted">{category.user?.name ?? "—"}</td>
                   <td>
                     <div className="actions">
                       <button

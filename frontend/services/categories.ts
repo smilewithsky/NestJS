@@ -1,11 +1,11 @@
-import 'server-only';
+import "server-only";
 
-import { request } from './http';
+import { request } from "./http";
 import type {
   Category,
   CreateCategoryInput,
   UpdateCategoryInput,
-} from './types';
+} from "./types";
 
 /** Các lời gọi tới /api/categories — 5 route CRUD bên NestJS. */
 export const categoriesApi = {
@@ -19,25 +19,25 @@ export const categoriesApi = {
       // hay quên khi giá trị có ký tự đặc biệt.
       userId
         ? `/categories?${new URLSearchParams({ userId: String(userId) })}`
-        : '/categories',
+        : "/categories",
     ),
 
   getOne: (id: number) => request<Category>(`/categories/${id}`),
 
   create: (input: CreateCategoryInput) =>
-    request<Category>('/categories', {
-      method: 'POST',
+    request<Category>("/categories", {
+      method: "POST",
       body: JSON.stringify(input),
     }),
 
   update: (id: number, input: UpdateCategoryInput) =>
     request<Category>(`/categories/${id}`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify(input),
     }),
 
   remove: (id: number) =>
     request<void>(`/categories/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     }),
 };
