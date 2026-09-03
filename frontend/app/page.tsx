@@ -15,10 +15,10 @@ export default function HomePage() {
         </p>
         <div className="row">
           <Link href="/login">
-            <button type="button">Đăng nhập</button>
+            <button type="button" style={{ background: '#34A853' }}>Đăng nhập</button>
           </Link>
           <Link href="/users">
-            <button type="button">Quản lý User</button>
+            <button type="button" className="secondary">Quản lý User</button>
           </Link>
           <Link href="/categories">
             <button type="button" className="secondary">

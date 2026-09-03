@@ -5,17 +5,18 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
-import { Category } from './categories.entity';
+} from "typeorm";
+import { Category } from "./categories.entity";
+import { SaveParticipant } from "./saveParticipant.entity";
 
-@Entity('users')
+@Entity("users")
 export class User {
   /**
    * Khoá chính, tự tăng.
    * Postgres sẽ tạo cột kiểu SERIAL/IDENTITY.
    */
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   /**
    * @Column() = 1 cột thường.
@@ -40,7 +41,7 @@ export class User {
    * Vì tsconfig bật strictNullChecks, kiểu TS phải là `number | null`
    * cho khớp với thực tế dữ liệu.
    */
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: "int", nullable: true })
   age?: number | null;
 
   /**
@@ -54,7 +55,7 @@ export class User {
    *
    * nullable vì user đăng nhập bằng Google thì không có mật khẩu.
    */
-  @Column({ type: 'varchar', nullable: true, select: false })
+  @Column({ type: "varchar", nullable: true, select: false })
   password?: string | null;
 
   /**
@@ -62,11 +63,11 @@ export class User {
    * ổn định, KHÔNG đổi kể cả khi user đổi email. Vì vậy nó là khoá để
    * nhận ra "vẫn là người này" ở các lần đăng nhập sau.
    */
-  @Column({ type: 'varchar', nullable: true, unique: true })
+  @Column({ type: "varchar", nullable: true, unique: true })
   googleId?: string | null;
 
   /** Ảnh đại diện Google trả về — chỉ để hiển thị. */
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: "varchar", nullable: true })
   avatarUrl?: string | null;
 
   /**
@@ -77,12 +78,17 @@ export class User {
    * name: 'created_at' → trong DB cột tên snake_case,
    * trong code vẫn dùng camelCase createdAt.
    */
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: "updated_at" })
   updatedAt!: Date;
 
   @OneToMany(() => Category, (category) => category.user, { cascade: true })
   categories!: Category[];
+
+  @OneToMany(() => SaveParticipant, (saveParticipant) => saveParticipant.user, {
+    cascade: true,
+  })
+  saveParticipants!: SaveParticipant[];
 }

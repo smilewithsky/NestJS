@@ -1,12 +1,13 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
-import { CategoryModule } from './categories/category.module';
-import { AuthModule } from './auth/auth.module';
-import { TransectionsModule } from './transections/transections.module';
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { UsersModule } from "./users/users.module";
+import { CategoryModule } from "./categories/category.module";
+import { AuthModule } from "./auth/auth.module";
+import { TransectionsModule } from "./transections/transections.module";
+import { SaveModule } from "./save/save.module";
 
 /**
  * AppModule = MODULE GỐC (root module) của ứng dụng.
@@ -54,15 +55,15 @@ import { TransectionsModule } from './transections/transections.module';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        type: 'postgres' as const, // loại DB — cần driver tương ứng (package `pg`)
-        host: config.get<string>('DB_HOST', 'localhost'),
-        port: Number(config.get('DB_PORT', 5432)),
-        username: config.get<string>('DB_USERNAME', 'postgres'),
-        password: config.get<string>('DB_PASSWORD', 'postgres'),
-        database: config.get<string>('DB_DATABASE', 'nestjs_db'),
+        type: "postgres" as const, // loại DB — cần driver tương ứng (package `pg`)
+        host: config.get<string>("DB_HOST", "localhost"),
+        port: Number(config.get("DB_PORT", 5432)),
+        username: config.get<string>("DB_USERNAME", "postgres"),
+        password: config.get<string>("DB_PASSWORD", "postgres"),
+        database: config.get<string>("DB_DATABASE", "nestjs_db"),
         autoLoadEntities: true,
         synchronize: true,
-        logging: config.get('NODE_ENV') !== 'production',
+        logging: config.get("NODE_ENV") !== "production",
       }),
     }),
 
@@ -73,6 +74,7 @@ import { TransectionsModule } from './transections/transections.module';
     CategoryModule,
     TransectionsModule,
     AuthModule,
+    SaveModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -9,10 +9,10 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-} from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UsersService } from './users.service';
+} from "@nestjs/common";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { UsersService } from "./users.service";
 
 /**
  * CONTROLLER = cửa ra vào HTTP. Chỉ làm 3 việc:
@@ -27,7 +27,7 @@ import { UsersService } from './users.service';
  * trả về gì thì Nest tự serialize thành JSON, status mặc định
  * 200 cho GET/PATCH/DELETE và 201 cho POST.
  */
-@Controller('users')
+@Controller("users")
 export class UsersController {
   // DEPENDENCY INJECTION: chỉ cần khai báo, KHÔNG tự new UsersService().
   // Nest thấy kiểu UsersService → tự tìm provider tương ứng và tiêm vào.
@@ -56,15 +56,15 @@ export class UsersController {
    * ParseIntPipe chuyển "1" → 1, và tự trả 400 nếu client gửi "abc".
    * → nhờ nó, service luôn nhận được number sạch.
    */
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  @Get(":id")
+  findOne(@Param("id", ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 
   /** PATCH /api/users/:id */
-  @Patch(':id')
+  @Patch(":id")
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param("id", ParseIntPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.usersService.update(id, updateUserDto);
@@ -75,9 +75,9 @@ export class UsersController {
    * @HttpCode(204) → đổi status mặc định thành 204 No Content,
    * vì xoá xong thì không có gì để trả về.
    */
-  @Delete(':id')
+  @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param("id", ParseIntPipe) id: number) {
     return this.usersService.remove(id);
   }
 }
